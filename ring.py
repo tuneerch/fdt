@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 
 L = 6 # chain length is 2L+1
 gamma = 1.
-tau = 0.5
+tau = 0.1
 
 x_det = 0 #detector position
 x_init = 0 #starting point of particle

@@ -19,11 +19,11 @@ a = np.sqrt(2./(L+1.)) * np.sin(np.pi * np.outer((x+1.),(x+1.)) / (L+1.)) # k's 
 en_arr = -2. * gamma * np.cos(np.pi*(x+1.)/(L+1.))
 
 U = np.diag(np.exp(-1J *tau* en_arr))
-U = np.inner(a,U)ss
+U = np.inner(a,U)
 U = np.inner(U,a)
 U[x_det,:] = 0 #placing detector at x_det
 
-n_max = int(1e6)
+n_max = int(1e7)
 S = np.zeros(n_max)
 psi = np.zeros(L)
 psi[x_init] = 1. #initialising state at x_init
