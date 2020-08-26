@@ -10,7 +10,7 @@ L = 5 # chain length is 2L+1
 tau = 0.1
 
 x_init = 1
-x_det = 4 
+x_det = 1 
 #x_det = int((L-1)/2) #detector position
 #x_init = x_det #starting point of particle
 
@@ -28,7 +28,7 @@ a = np.zeros((L,L))
 
 clock1.lap()
 #chain dynamics
-a = np.sqrt(2./(L+1.)) * np.sin(np.pi * np.outer((x+1.),(x+1.)) / (L+1.)) # k's and x's have same vals in this convention
+a = np.sqrt(2./(L+1.)) * np.sin(np.pi * np.outer((x+1.),(x+1.)) / (L+1.)) #k's and x's have same vals in this convention
 en_arr = -2. * np.cos(np.pi*(x+1.)/(L+1.))
 clock1.lap('coeff matrix creation')
 
@@ -36,6 +36,7 @@ n_max = int(500)
 S = np.zeros(n_max)
 tau_arr = np.linspace(0,2*np.pi,500)
 n_mean_arr = np.ndarray(tau_arr.shape)
+p_tot_arr = np.ndarray(tau_arr.shape) #total detection probability
 
 for i in range(len(tau_arr)):
     tau = tau_arr[i]
@@ -52,9 +53,10 @@ for i in range(len(tau_arr)):
     
     F = -np.diff(np.append(1,S))
     n_mean_arr[i] = np.sum(np.arange(1,len(F)+1) * F)
+    p_tot_arr[i] = 1.-S[-1]
 
 clock1.lap('finished computation')    
-data = np.array([tau_arr,n_mean_arr])
+data = np.array([tau_arr,n_mean_arr,p_tot_arr])
 filename = 'test_data/'+str(L)+'chain.dat'
 f = open(filename, 'w')
 f.write('#L = %d\n'%L)
