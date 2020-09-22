@@ -6,7 +6,7 @@ import timing
 
 clock1 = timing.stopclock()
 
-L = 5 # chain length is 2L+1
+L = 6 # chain length is 2L+1
 tau = 0.1
 
 x_init = 1
@@ -23,18 +23,19 @@ a = np.zeros((L,L))
 '''defining energy coeff matrix a[k,x] := <E_k|x>'''
 
 #ring dynamics
-#a = 1./np.sqrt(L) * np.exp(2J*np.pi/L * np.outer(x,x)) # k's and x's have same vals in this convention
-#en_arr = -2.*np.cos(2.*np.pi/L*x)
+a = 1./np.sqrt(L) * np.exp(2J*np.pi/L * np.outer(x,x)) # k's and x's have same vals in this convention
+en_arr = -2.*np.cos(2.*np.pi/L*x)
 
 clock1.lap()
 #chain dynamics
-a = np.sqrt(2./(L+1.)) * np.sin(np.pi * np.outer((x+1.),(x+1.)) / (L+1.)) #k's and x's have same vals in this convention
-en_arr = -2. * np.cos(np.pi*(x+1.)/(L+1.))
+#a = np.sqrt(2./(L+1.)) * np.sin(np.pi * np.outer((x+1.),(x+1.)) / (L+1.)) #k's and x's have same vals in this convention
+#en_arr = -2. * np.cos(np.pi*(x+1.)/(L+1.))
+
 clock1.lap('coeff matrix creation')
 
-n_max = int(500)
+n_max = int(10000)
 S = np.zeros(n_max)
-tau_arr = np.linspace(0,2*np.pi,500)
+tau_arr = np.linspace(0,2*np.pi,5000)
 n_mean_arr = np.ndarray(tau_arr.shape)
 p_tot_arr = np.ndarray(tau_arr.shape) #total detection probability
 
@@ -57,7 +58,7 @@ for i in range(len(tau_arr)):
 
 clock1.lap('finished computation')    
 data = np.array([tau_arr,n_mean_arr,p_tot_arr])
-filename = 'test_data/'+str(L)+'chain.dat'
+filename = 'mean_times/'+str(L)+'ring.dat'
 f = open(filename, 'w')
 f.write('#L = %d\n'%L)
 f.write('#transition: %d -> %d \n'%(x_init,x_det))
