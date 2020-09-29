@@ -10,9 +10,6 @@ x_init = 0 #starting point of particle
 
 x = np.arange(L)
 
-#a = np.zeros((L,L))
-#for k in range(-L,L+1):
-#    a[k+L] = 1./np.sqrt(L+1) * np.sin(np.pi/2. * (k+L+1.) * (x+L+1.) / (L+1.))
 
 '''defining energy coeff matrix a[k,x] := <E_i|x>'''
 a = 1./np.sqrt(L) * np.exp(2J*np.pi/L * np.outer(x,x)) # k's and x's have same vals in this convention
@@ -64,7 +61,7 @@ def getR(tau):
 #
 #plt.show()
 
-tau_arr = np.linspace(0.1,5,50)
+tau_arr = np.linspace(0.1,10,100)
 R_arr = np.empty((0))
 for tau in tau_arr:
     try:

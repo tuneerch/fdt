@@ -40,7 +40,7 @@ def getR(tau):
     f2 = ((reF-1.)**2 + imF**2) / ((reF+1.)**2 + imF**2)
     return(integrate.trapz(f2, theta)/(2*np.pi))
 
-tau_arr = np.linspace(0.1,5,50)
+tau_arr = np.linspace(0.1,10,100)
 R_arr = np.ndarray((0))
 for tau in tau_arr:
    R_arr = np.append(R_arr, getR(tau))
